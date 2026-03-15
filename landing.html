@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShadowScout — See the Players Before Everyone Else Does</title>
+  <meta name="description" content="ShadowScout surfaces data-first scouting signals from undertracked leagues. Built for scouts and agents who need to find players faster." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="stylesheet" href="css/landing-page.css" />
+</head>
+<body>
+
+<div class="page-wrap">
+
+<!-- ===== NAV ===== -->
+<nav class="site-nav">
+  <div class="container nav-inner">
+    <a href="landing.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#4F8EF7" stroke-width="1.5"/>
+          <path d="M14 4 L18 10 L14 8 L10 10 Z" fill="#4F8EF7"/>
+          <circle cx="14" cy="14" r="4" fill="#4F8EF7" fill-opacity="0.2" stroke="#4F8EF7" stroke-width="1.2"/>
+          <path d="M6 14 Q10 10 14 14 Q18 18 22 14" stroke="#4F8EF7" stroke-width="1" fill="none" stroke-opacity="0.6"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text">Shadow<span>Scout</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#why-ligue2">Ligue 2</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-ghost btn-sm">Sign In</a>
+      <a href="#early-access" class="btn btn-primary btn-sm">Request Access</a>
+    </div>
+
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how-it-works">How It Works</a>
+  <a href="#features">Features</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#why-ligue2">Ligue 2</a>
+  <a href="login.html" style="color:var(--accent)">Sign In →</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-glow-top"></div>
+  <div class="container hero-inner">
+
+    <!-- LEFT: copy -->
+    <div class="hero-copy">
+      <div class="hero-eyebrow">
+        <span class="badge badge-blue"><i class="fas fa-bolt"></i> Now in Early Access</span>
+      </div>
+      <h1 class="hero-title">
+        See the Players<br/>
+        <span class="hero-title-accent">Before Everyone Else Does</span>
+      </h1>
+      <p class="hero-subtitle">
+        ShadowScout surfaces data-first scouting signals from undertracked leagues so scouts and agents can decide <strong>which players deserve video review now</strong>.
+      </p>
+      <p class="hero-league">
+        Starting with <span class="hero-league-pill">🇫🇷 France Ligue 2</span>
+      </p>
+      <div class="hero-actions">
+        <a href="#early-access" class="btn btn-primary btn-lg">
+          <i class="fas fa-envelope"></i> Request Early Access
+        </a>
+        <a href="login.html" class="btn btn-ghost btn-lg">
+          <i class="fas fa-sign-in-alt"></i> View Demo
+        </a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-faces">
+          <div class="proof-face"><img src="images/players/ek.jpg" alt="" /></div>
+          <div class="proof-face"><img src="images/players/ak.jpg" alt="" /></div>
+          <div class="proof-face"><img src="images/players/ld.jpg" alt="" /></div>
+          <div class="proof-face"><img src="images/players/mt.jpg" alt="" /></div>
+        </div>
+        <span>Joined by scouts, agents &amp; analysts</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: Signal Board visual -->
+    <div class="hero-visual">
+      <div class="hero-board">
+        <!-- Chrome bar -->
+        <div class="board-chrome">
+          <div class="chrome-dot r"></div>
+          <div class="chrome-dot a"></div>
+          <div class="chrome-dot g"></div>
+          <span class="chrome-title">Ligue 2 Signal Board — March 2026</span>
+        </div>
+
+        <!-- Stats row -->
+        <div class="board-stats">
+          <div class="bstat"><span class="bstat-num">18</span><span class="bstat-lbl">Clubs</span></div>
+          <div class="bstat"><span class="bstat-num">314</span><span class="bstat-lbl">Players</span></div>
+          <div class="bstat"><span class="bstat-num green">12</span><span class="bstat-lbl">Signals</span></div>
+          <div class="bstat"><span class="bstat-num purple">7</span><span class="bstat-lbl">U23</span></div>
+        </div>
+
+        <!-- Role pills -->
+        <div class="board-role-pills">
+          <span class="brp b1">Ball-Win 6</span>
+          <span class="brp b2">Prog 8/10</span>
+          <span class="brp b3">Aerial CB</span>
+          <span class="brp b4">Att. FB</span>
+          <span class="brp b5">Box-Threat 9</span>
+        </div>
+
+        <!-- Players with photos -->
+        <div class="board-players">
+          <div class="bp-row" style="--av-color:#10b981">
+            <div class="bp-photo"><img src="images/players/ek.jpg" alt="E. Kroupi" /></div>
+            <div class="bp-info"><strong>E. Kroupi</strong><small>Grenoble · CM</small></div>
+            <div class="bp-score" style="color:#10b981">9.1</div>
+            <div class="bp-trend trend-up"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="bp-row" style="--av-color:#ef4444">
+            <div class="bp-photo"><img src="images/players/ak.jpg" alt="A. Konaté" /></div>
+            <div class="bp-info"><strong>A. Konaté</strong><small>Bastia · ST</small></div>
+            <div class="bp-score" style="color:#ef4444">9.3</div>
+            <div class="bp-trend trend-up"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="bp-row" style="--av-color:#f59e0b">
+            <div class="bp-photo"><img src="images/players/ld.jpg" alt="L. Diarra" /></div>
+            <div class="bp-info"><strong>L. Diarra</strong><small>Metz · CB</small></div>
+            <div class="bp-score" style="color:#f59e0b">8.6</div>
+            <div class="bp-trend trend-up"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="bp-row" style="--av-color:#4F8EF7">
+            <div class="bp-photo"><img src="images/players/td.jpg" alt="T. Diallo" /></div>
+            <div class="bp-info"><strong>T. Diallo</strong><small>Caen · DM</small></div>
+            <div class="bp-score" style="color:#4F8EF7">8.4</div>
+            <div class="bp-trend trend-flat"><i class="fas fa-minus"></i></div>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="board-tags">
+          <span class="btag">Recovery Magnet</span>
+          <span class="btag">Vertical Link</span>
+          <span class="btag">Box Hunter</span>
+          <span class="btag">Air Lock</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== PROBLEM ===== -->
+<section class="problem-section" id="problem">
+  <div class="container-narrow">
+    <div class="problem-inner">
+      <span class="section-label">The Problem</span>
+      <div class="problem-quote-block">
+        "Modern scouting tools give you huge databases. But databases do not answer the most important question:<br/>
+        <em>Which players should I actually review this week?</em>"
+      </div>
+      <p class="problem-body">
+        ShadowScout solves that problem. Each signal cycle scans Ligue 2 player data and identifies signals using role-specific metrics, minutes thresholds, performance trends, age context, and statistical acceleration.
+      </p>
+      <p class="problem-body">
+        The result is a <strong>curated scouting intelligence board</strong>, not another analytics platform.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-section" id="how-it-works">
+  <div class="container">
+    <div class="how-header">
+      <span class="section-label">Process</span>
+      <h2 class="section-title">How ShadowScout Works</h2>
+      <p class="section-subtitle">Four steps from raw Ligue 2 data to actionable discovery signals.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon-box"><i class="fas fa-database"></i></div>
+        <h3 class="step-title">Data Ingestion</h3>
+        <p class="step-body">Match and player data from Ligue 2 is collected and standardized across all clubs.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon-box"><i class="fas fa-chess-knight"></i></div>
+        <h3 class="step-title">Role Scoring</h3>
+        <p class="step-body">Players are evaluated using role-specific metrics — interceptions for DMs, aerial win rates for CBs, xG trends for forwards.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon-box"><i class="fas fa-bolt"></i></div>
+        <h3 class="step-title">Signal Detection</h3>
+        <p class="step-body">Players crossing defined thresholds generate signals. Signals are ranked and tracked across monthly cycles.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon-box"><i class="fas fa-th-large"></i></div>
+        <h3 class="step-title">Intelligence Output</h3>
+        <p class="step-body">Signals appear on the ShadowScout board and in the monthly brief. Each signal answers: <em>Why is this player surfacing right now?</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES BENTO ===== -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="features-header">
+      <span class="section-label">What You Get</span>
+      <h2 class="section-title">Four tools. One purpose.</h2>
+      <p class="section-subtitle">Everything you need to identify players earlier and act faster.</p>
+    </div>
+
+    <div class="features-bento">
+
+      <!-- ① Signal Board — tall left card -->
+      <div class="feat-card feat-signal-board">
+        <div class="feat-icon-box blue"><i class="fas fa-th-large"></i></div>
+        <h3 class="feat-title">The Signal Board</h3>
+        <p class="feat-body">The ShadowScout dashboard shows top players surfacing in each role, rising and falling signals, role-based leaderboards, movement across signal cycles, and discovery shortlists.</p>
+        <div class="feat-bullets">
+          <div class="feat-bullet"><i class="fas fa-check"></i> Role-based leaderboards</div>
+          <div class="feat-bullet"><i class="fas fa-check"></i> Rising &amp; falling signals</div>
+          <div class="feat-bullet"><i class="fas fa-check"></i> Cycle-over-cycle movement</div>
+          <div class="feat-bullet"><i class="fas fa-check"></i> 10 players worth reviewing</div>
+        </div>
+        <!-- Mini board preview with player photos -->
+        <div class="feat-mini-board">
+          <div class="fmb-row">
+            <div class="fmb-photo"><img src="images/players/ek.jpg" alt="E. Kroupi" /></div>
+            <div class="fmb-info"><span>E. Kroupi</span><small>Grenoble · Progressive 8 · Age 21</small></div>
+            <div class="fmb-score" style="color:#10b981">9.1</div>
+            <div class="fmb-arrow up"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="fmb-row">
+            <div class="fmb-photo"><img src="images/players/ak.jpg" alt="A. Konaté" /></div>
+            <div class="fmb-info"><span>A. Konaté</span><small>Bastia · Box-Threat 9 · Age 22</small></div>
+            <div class="fmb-score" style="color:#ef4444">9.3</div>
+            <div class="fmb-arrow up"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="fmb-row">
+            <div class="fmb-photo"><img src="images/players/ld.jpg" alt="L. Diarra" /></div>
+            <div class="fmb-info"><span>L. Diarra</span><small>Metz · Aerial CB · Age 27</small></div>
+            <div class="fmb-score" style="color:#f59e0b">8.6</div>
+            <div class="fmb-arrow up"><i class="fas fa-arrow-up"></i></div>
+          </div>
+          <div class="fmb-row">
+            <div class="fmb-photo"><img src="images/players/cv.jpg" alt="C. Vidal" /></div>
+            <div class="fmb-info"><span>C. Vidal</span><small>Auxerre · Aerial CB · Age 29</small></div>
+            <div class="fmb-score" style="color:#4F8EF7">8.1</div>
+            <div class="fmb-arrow flat"><i class="fas fa-minus"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② Shadow Tags — top right -->
+      <div class="feat-card feat-shadow-tags">
+        <div class="feat-icon-box teal"><i class="fas fa-tags"></i></div>
+        <h3 class="feat-title">Shadow Tags</h3>
+        <p class="feat-body">Every surfaced player includes Shadow Tags explaining why they appeared — translating statistics into clear scouting context.</p>
+        <div class="tag-cloud">
+          <span class="tc-tag blue">Recovery Magnet</span>
+          <span class="tc-tag teal">Air Lock</span>
+          <span class="tc-tag red">Box Hunter</span>
+          <span class="tc-tag amber">Carry Trigger</span>
+          <span class="tc-tag green">Pressure Engine</span>
+          <span class="tc-tag blue">Vertical Link</span>
+          <span class="tc-tag purple">Duel Wall</span>
+          <span class="tc-tag teal">Space Creator</span>
+        </div>
+      </div>
+
+      <!-- ③ Monthly Brief — bottom right -->
+      <div class="feat-card feat-brief">
+        <div class="feat-icon-box green"><i class="fas fa-file-alt"></i></div>
+        <h3 class="feat-title">Monthly Signal Brief</h3>
+        <p class="feat-body">Each month ShadowScout publishes the Ligue 2 Signal Brief with role leaders, rising players, signal movers, editorial insights, and the 10 players worth reviewing now.</p>
+        <div class="brief-fmt-list">
+          <div class="brief-fmt-item"><i class="fas fa-file-pdf"></i> Downloadable PDF brief</div>
+          <div class="brief-fmt-item"><i class="fas fa-globe"></i> Web version in platform</div>
+        </div>
+      </div>
+
+      <!-- ④ Role Discovery — wide bottom row -->
+      <div class="feat-card feat-roles">
+        <div class="feat-roles-left">
+          <div class="feat-icon-box amber"><i class="fas fa-running"></i></div>
+          <h3 class="feat-title">Role-Based Discovery</h3>
+          <p class="feat-body">Players are evaluated inside defined role categories. Each role board highlights players whose statistical signals match that profile.</p>
+          <div class="role-pills-grid">
+            <div class="role-pill-card"><i class="fas fa-shield-alt"></i> Ball-Winning 6</div>
+            <div class="role-pill-card"><i class="fas fa-check-circle"></i> Progressive 8/10</div>
+            <div class="role-pill-card"><i class="fas fa-expand-arrows-alt"></i> Aerial Center Back</div>
+            <div class="role-pill-card"><i class="fas fa-exchange-alt"></i> Attacking Fullback</div>
+            <div class="role-pill-card"><i class="fas fa-crosshairs"></i> Box-Threat 9</div>
+          </div>
+        </div>
+        <div class="feat-roles-right">
+          <div class="role-player-stack">
+            <div class="rps-row">
+              <div class="rps-photo"><img src="images/players/td.jpg" alt="T. Diallo" /></div>
+              <div class="rps-info"><span>T. Diallo</span><small>Caen · Ball-Win 6</small></div>
+              <span class="rps-badge">8.4</span>
+            </div>
+            <div class="rps-row">
+              <div class="rps-photo"><img src="images/players/st.jpg" alt="S. Traoré" /></div>
+              <div class="rps-info"><span>S. Traoré</span><small>Dunkerque · Att. FB</small></div>
+              <span class="rps-badge">8.7</span>
+            </div>
+            <div class="rps-row">
+              <div class="rps-photo"><img src="images/players/jn.jpg" alt="J. Njo Lea" /></div>
+              <div class="rps-info"><span>J. Njo Lea</span><small>Amiens · Box-Threat</small></div>
+              <span class="rps-badge">8.8</span>
+            </div>
+            <div class="rps-row">
+              <div class="rps-photo"><img src="images/players/mc.jpg" alt="M. Camara" /></div>
+              <div class="rps-info"><span>M. Camara</span><small>Amiens · Aerial CB</small></div>
+              <span class="rps-badge">8.3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXAMPLE SIGNALS ===== -->
+<section class="signals-section" id="signals">
+  <div class="container">
+    <div class="signals-header">
+      <span class="section-label">Signal Examples</span>
+      <h2 class="section-title">What signals look like</h2>
+      <p class="section-subtitle">Real signal cards from the March 2026 cycle.</p>
+    </div>
+    <div class="signals-grid">
+      <div class="signal-ex-card">
+        <div class="sex-header">
+          <div class="sex-photo"><img src="images/players/ek.jpg" alt="E. Kroupi" /></div>
+          <div class="sex-info">
+            <span class="sex-name">Eli Kroupi</span>
+            <small class="sex-meta">Grenoble · CM · Age 21</small>
+          </div>
+          <span class="sex-score green">9.1 <i class="fas fa-arrow-up"></i></span>
+        </div>
+        <p class="sex-reason">"Progressive carry rate in the top 5% of Ligue 2 CMs over the last 8 matches, with pass completion above 88%."</p>
+        <div class="sex-tags">
+          <span class="tc-tag green">Carry Trigger</span>
+          <span class="tc-tag blue">Vertical Link</span>
+        </div>
+      </div>
+      <div class="signal-ex-card">
+        <div class="sex-header">
+          <div class="sex-photo"><img src="images/players/ak.jpg" alt="A. Konaté" /></div>
+          <div class="sex-info">
+            <span class="sex-name">Abdou Konaté</span>
+            <small class="sex-meta">Bastia · ST · Age 22</small>
+          </div>
+          <span class="sex-score red">9.3 <i class="fas fa-arrow-up"></i></span>
+        </div>
+        <p class="sex-reason">"Top Ligue 2 xG per 90 among under-23 forwards. Box entry rate rising across last 4 matches."</p>
+        <div class="sex-tags">
+          <span class="tc-tag red">Box Hunter</span>
+          <span class="tc-tag amber">Carry Trigger</span>
+        </div>
+      </div>
+      <div class="signal-ex-card">
+        <div class="sex-header">
+          <div class="sex-photo"><img src="images/players/ld.jpg" alt="L. Diarra" /></div>
+          <div class="sex-info">
+            <span class="sex-name">Lamine Diarra</span>
+            <small class="sex-meta">Metz · CB · Age 27</small>
+          </div>
+          <span class="sex-score amber">8.6 <i class="fas fa-arrow-up"></i></span>
+        </div>
+        <p class="sex-reason">"Aerial duel success rate above 72% for 6 consecutive matches. Highest among tracked Ligue 2 CBs."</p>
+        <div class="sex-tags">
+          <span class="tc-tag teal">Air Lock</span>
+          <span class="tc-tag green">Pressure Engine</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT IT IS NOT ===== -->
+<section class="not-section" id="not">
+  <div class="container-narrow">
+    <div class="not-inner">
+      <span class="section-label">Clarity</span>
+      <h2 class="section-title">What ShadowScout Is Not</h2>
+      <div class="not-grid">
+        <div class="not-item">
+          <div class="not-icon"><i class="fas fa-times"></i></div>
+          <div>
+            <strong>Not a video platform</strong>
+            <p>ShadowScout surfaces signals. You choose which players to watch video on.</p>
+          </div>
+        </div>
+        <div class="not-item">
+          <div class="not-icon"><i class="fas fa-times"></i></div>
+          <div>
+            <strong>Not a player database</strong>
+            <p>It is a curated signal board, not a platform to search arbitrary player stats.</p>
+          </div>
+        </div>
+        <div class="not-item">
+          <div class="not-icon"><i class="fas fa-times"></i></div>
+          <div>
+            <strong>Not an automated shortlist generator</strong>
+            <p>Signals require human judgment. ShadowScout tells you who to consider, not who to sign.</p>
+          </div>
+        </div>
+        <div class="not-item">
+          <div class="not-icon"><i class="fas fa-times"></i></div>
+          <div>
+            <strong>Not a replacement for scouting</strong>
+            <p>ShadowScout helps you decide <em>where to look first</em>, not make final recruitment decisions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY LIGUE 2 ===== -->
+<section class="ligue2-section" id="why-ligue2">
+  <div class="container">
+    <div class="ligue2-inner">
+      <div class="ligue2-content">
+        <span class="section-label">🇫🇷 The League</span>
+        <h2 class="section-title">Why Start With Ligue 2</h2>
+        <p class="section-subtitle">
+          Ligue 2 is one of Europe's strongest development leagues. Many players emerge here before moving to bigger competitions — but the league is large enough that discovering players early requires serious filtering.
+        </p>
+        <p style="color:var(--text-secondary); margin-top: 16px; font-size:15px;">
+          ShadowScout focuses on surfacing signals inside this league first, before expanding to other undertracked competitions.
+        </p>
+        <div class="ligue2-dest-label">Players commonly emerge from Ligue 2 before moving to:</div>
+        <div class="ligue2-dest-pills">
+          <div class="dest-pill"><span>🇫🇷</span> Ligue 1</div>
+          <div class="dest-pill"><span>🇧🇪</span> Belgium Pro</div>
+          <div class="dest-pill"><span>🇳🇱</span> Eredivisie</div>
+          <div class="dest-pill"><span>🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> Championship</div>
+          <div class="dest-pill"><span>🇩🇪</span> Bundesliga 2</div>
+        </div>
+      </div>
+      <div class="ligue2-stats-grid">
+        <div class="l2-stat">
+          <div class="l2-num">20</div>
+          <div class="l2-lbl">Clubs</div>
+        </div>
+        <div class="l2-stat">
+          <div class="l2-num">380</div>
+          <div class="l2-lbl">Matches / Season</div>
+        </div>
+        <div class="l2-stat featured">
+          <div class="l2-num accent">314</div>
+          <div class="l2-lbl">Active Players Tracked</div>
+        </div>
+        <div class="l2-stat">
+          <div class="l2-num">12</div>
+          <div class="l2-lbl">New Signals / Month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHO IT'S FOR ===== -->
+<section class="users-section" id="users">
+  <div class="container">
+    <div class="users-header">
+      <span class="section-label">Built For</span>
+      <h2 class="section-title">Designed for serious discovery</h2>
+      <p class="section-subtitle">ShadowScout is built for professionals who need to find players faster.</p>
+    </div>
+    <div class="users-grid">
+      <div class="user-card">
+        <div class="user-icon-box"><i class="fas fa-binoculars"></i></div>
+        <h4 class="user-title">Independent Scouts</h4>
+        <p class="user-body">Get curated shortlists instead of scanning hundreds of players manually.</p>
+      </div>
+      <div class="user-card">
+        <div class="user-icon-box"><i class="fas fa-handshake"></i></div>
+        <h4 class="user-title">Football Agents</h4>
+        <p class="user-body">Identify players early — before the wider market reacts to their data.</p>
+      </div>
+      <div class="user-card">
+        <div class="user-icon-box"><i class="fas fa-chart-bar"></i></div>
+        <h4 class="user-title">Recruitment Analysts</h4>
+        <p class="user-body">Role-specific signal boards aligned with the positions you need to fill.</p>
+      </div>
+      <div class="user-card">
+        <div class="user-icon-box"><i class="fas fa-futbol"></i></div>
+        <h4 class="user-title">Smaller Clubs</h4>
+        <p class="user-body">Access intelligence that was previously only available to well-funded recruitment departments.</p>
+      </div>
+    </div>
+    <p class="users-note">
+      <i class="fas fa-info-circle"></i>
+      ShadowScout does not replace scouting — it helps you decide <strong>where to look first</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <span class="section-label">Pricing</span>
+      <h2 class="section-title">Premium intelligence, clear pricing</h2>
+      <p class="section-subtitle">A premium scouting intelligence tool, not a mass-market product.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- Founding Member -->
+      <div class="pricing-card featured">
+        <div class="pc-top">
+          <span class="badge badge-blue"><i class="fas fa-star"></i> Founding Member</span>
+          <span class="pc-limited">Limited to first 100</span>
+        </div>
+        <div class="pc-price">
+          <span class="pc-amount">$99</span>
+          <span class="pc-period">/ month</span>
+        </div>
+        <div class="pc-annual">or $990/year <span class="pc-save">Save 2 months</span></div>
+        <ul class="pc-features">
+          <li><i class="fas fa-check"></i> Full Ligue 2 signal board</li>
+          <li><i class="fas fa-check"></i> Role-based discovery panels</li>
+          <li><i class="fas fa-check"></i> Monthly Ligue 2 Signal Brief</li>
+          <li><i class="fas fa-check"></i> Player search database</li>
+          <li><i class="fas fa-check"></i> Watchlist tracking</li>
+          <li><i class="fas fa-check"></i> CSV export tools</li>
+          <li><i class="fas fa-check"></i> Early feature influence</li>
+        </ul>
+        <a href="#early-access" class="btn btn-primary btn-lg ea-btn">Get Founding Access</a>
+      </div>
+
+      <!-- Professional -->
+      <div class="pricing-card">
+        <div class="pc-top">
+          <span class="badge badge-green">Professional Scout</span>
+        </div>
+        <div class="pc-price">
+          <span class="pc-amount">$199</span>
+          <span class="pc-period">/ month</span>
+        </div>
+        <div class="pc-annual">or $1,990/year <span class="pc-save">Save 2 months</span></div>
+        <ul class="pc-features">
+          <li><i class="fas fa-check"></i> Everything in Founding Member</li>
+          <li><i class="fas fa-check"></i> Expanded player filters</li>
+          <li><i class="fas fa-check"></i> Historical signal tracking</li>
+          <li><i class="fas fa-check"></i> Advanced trend panels</li>
+          <li><i class="fas fa-check"></i> Priority feature updates</li>
+          <li><i class="fas fa-check"></i> Future league expansions</li>
+        </ul>
+        <a href="#early-access" class="btn btn-outline btn-lg ea-btn">Request Access</a>
+      </div>
+
+      <!-- Agency -->
+      <div class="pricing-card muted">
+        <div class="pc-top">
+          <span class="badge badge-purple">Agency / Club — Coming Soon</span>
+        </div>
+        <div class="pc-price">
+          <span class="pc-amount">$499+</span>
+          <span class="pc-period">/ month</span>
+        </div>
+        <div class="pc-annual">Estimated starting price</div>
+        <ul class="pc-features">
+          <li class="muted-li"><i class="fas fa-clock"></i> Multi-user team access</li>
+          <li class="muted-li"><i class="fas fa-clock"></i> Shared watchlists</li>
+          <li class="muted-li"><i class="fas fa-clock"></i> Internal scouting notes</li>
+          <li class="muted-li"><i class="fas fa-clock"></i> Recruitment exports</li>
+          <li class="muted-li"><i class="fas fa-clock"></i> Additional leagues</li>
+        </ul>
+        <a href="#early-access" class="btn btn-ghost btn-lg ea-btn">Join Waitlist</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== EARLY ACCESS ===== -->
+<section class="ea-section" id="early-access">
+  <div class="container-narrow">
+    <div class="ea-card">
+      <div class="ea-glow"></div>
+      <div class="ea-header">
+        <span class="section-label" style="display:block;text-align:center;">Early Access</span>
+        <h2 class="section-title" style="text-align:center;">Join the First Signal Cycle</h2>
+        <p class="section-subtitle" style="text-align:center;margin:0 auto;">
+          ShadowScout is preparing its first Ligue 2 Signal Cycle. Join the early access list and receive the first Signal Brief when it launches.
+        </p>
+      </div>
+
+      <form class="ea-form" id="earlyAccessForm">
+        <div class="ea-row">
+          <input type="text"  placeholder="Your name"          class="ea-input" id="eaName" />
+          <input type="email" placeholder="Your email address" class="ea-input" id="eaEmail" />
+        </div>
+        <select class="ea-input" id="eaRole">
+          <option value="" disabled selected>Your role (optional)</option>
+          <option>Independent Scout</option>
+          <option>Football Agent</option>
+          <option>Recruitment Analyst</option>
+          <option>Club / Academy</option>
+          <option>Other</option>
+        </select>
+        <button type="submit" class="btn btn-primary btn-lg ea-btn">
+          <i class="fas fa-bolt"></i> Request Early Access
+        </button>
+      </form>
+
+      <div class="ea-success" id="eaSuccess" style="display:none;">
+        <div class="ea-success-icon"><i class="fas fa-check-circle"></i></div>
+        <h3>You're on the list.</h3>
+        <p>We'll send you the first Ligue 2 Signal Brief when the cycle launches.</p>
+      </div>
+
+      <div class="ea-perks">
+        <div class="ea-perk"><i class="fas fa-lock"></i> No payment required now</div>
+        <div class="ea-perk"><i class="fas fa-envelope"></i> First brief delivered to inbox</div>
+        <div class="ea-perk"><i class="fas fa-users"></i> Shape future features</div>
+      </div>
+
+      <div class="ea-signin">
+        <span>Already have access?</span>
+        <a href="login.html" class="btn btn-ghost btn-md">
+          <i class="fas fa-sign-in-alt"></i> Sign In or Try Demo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-logo">Shadow<span>Scout</span></div>
+      <div class="footer-tagline">Data-first shortlists for player discovery</div>
+    </div>
+    <div class="footer-links">
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#early-access">Early Access</a>
+      <a href="login.html">Sign In</a>
+    </div>
+    <div style="font-size:12px; color:var(--text-muted);">© 2026 ShadowScout</div>
+  </div>
+</footer>
+
+</div><!-- /.page-wrap -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* Mobile nav */
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const isOpen = mobileMenu.classList.contains('open');
+      const spans = hamburger.querySelectorAll('span');
+      spans[0].style.transform = isOpen ? 'rotate(45deg) translate(5px,5px)' : '';
+      spans[1].style.opacity   = isOpen ? '0' : '';
+      spans[2].style.transform = isOpen ? 'rotate(-45deg) translate(5px,-5px)' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; });
+      });
+    });
+  }
+
+  /* Nav scroll */
+  const nav = document.querySelector('.site-nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 40 ? 'rgba(79,142,247,0.2)' : '';
+  });
+
+  /* Early access form */
+  const form    = document.getElementById('earlyAccessForm');
+  const success = document.getElementById('eaSuccess');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const emailEl = document.getElementById('eaEmail');
+      if (!emailEl.value.trim() || !emailEl.value.includes('@')) {
+        emailEl.style.borderColor = '#ef4444';
+        emailEl.focus();
+        return;
+      }
+      form.style.opacity = '0.5';
+      form.style.pointerEvents = 'none';
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        const signups = JSON.parse(localStorage.getItem('ss_signups') || '[]');
+        signups.push({ email: emailEl.value, ts: Date.now() });
+        localStorage.setItem('ss_signups', JSON.stringify(signups));
+      }, 800);
+    });
+    document.getElementById('eaEmail').addEventListener('input', function() { this.style.borderColor = ''; });
+  }
+
+  /* Scroll animations */
+  const animEls = document.querySelectorAll('.step-card,.feat-card,.user-card,.l2-stat,.pricing-card,.signal-ex-card,.not-item');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }, i*60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  animEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    obs.observe(el);
+  });
+
+  /* Smooth anchor scroll */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+    });
+  });
+
+  /* Already logged in → dashboard link */
+  const raw = localStorage.getItem('ss_session');
+  if (raw) {
+    try {
+      const session = JSON.parse(raw);
+      if (Date.now() < session.expires) {
+        document.querySelectorAll('a[href="login.html"]').forEach(a => {
+          a.textContent = '→ Dashboard';
+          a.href = 'index.html';
+        });
+      }
+    } catch(e) {}
+  }
+
+  console.log('%c⚡ ShadowScout Landing', 'color:#4F8EF7;font-weight:bold;font-size:14px');
+});
+</script>
+</body>
+</html>
