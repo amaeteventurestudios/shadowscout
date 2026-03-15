@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShadowScout — Ligue 2 Signal Board</title>
+  <script>
+    /* Early auth guard — redirect before page renders if no session */
+    (function(){
+      var SESSION_KEY = 'ss_session';
+      var raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) { window.location.replace('login.html'); return; }
+      try {
+        var s = JSON.parse(raw);
+        if (Date.now() > s.expires) {
+          localStorage.removeItem(SESSION_KEY);
+          window.location.replace('login.html');
+        }
+      } catch(e) {
+        localStorage.removeItem(SESSION_KEY);
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/extras.css" />
+</head>
+<body>
+
+<!-- ===== APP SHELL ===== -->
+<div class="app-shell">
+
+  <!-- ===== TOP NAV ===== -->
+  <header class="topnav">
+    <div class="topnav-left">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="13" stroke="#4F8EF7" stroke-width="1.5"/>
+            <path d="M14 4 L18 10 L14 8 L10 10 Z" fill="#4F8EF7"/>
+            <circle cx="14" cy="14" r="4" fill="#4F8EF7" fill-opacity="0.2" stroke="#4F8EF7" stroke-width="1.2"/>
+            <path d="M6 14 Q10 10 14 14 Q18 18 22 14" stroke="#4F8EF7" stroke-width="1" fill="none" stroke-opacity="0.6"/>
+          </svg>
+        </div>
+        <span class="logo-text">ShadowScout</span>
+      </div>
+
+      <div class="topnav-divider"></div>
+
+      <div class="league-badge">
+        <span class="flag">🇫🇷</span>
+        <span class="league-name">Ligue 2</span>
+        <i class="fas fa-lock lock-icon"></i>
+      </div>
+
+      <div class="topnav-divider"></div>
+
+      <div class="cycle-label">
+        <i class="far fa-clock"></i>
+        <span>March 2026 Signal Cycle</span>
+        <span class="cycle-dot">·</span>
+        <span class="cycle-updated">Last Updated: March 12, 2026</span>
+        <i class="fas fa-chevron-down cycle-chevron"></i>
+      </div>
+    </div>
+
+    <div class="topnav-right">
+      <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search players, roles, clubs…" />
+        <kbd>⌘K</kbd>
+      </div>
+      <button class="btn-icon" title="Notifications">
+        <i class="fas fa-bell"></i>
+        <span class="badge-dot"></span>
+      </button>
+      <button class="btn-icon" title="Account">
+        <i class="fas fa-user-circle"></i>
+      </button>
+      <button class="btn-icon" onclick="if(confirm('Sign out?'))logout()" title="Sign Out" style="color:var(--text-muted)">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+      <button class="btn-download-brief">
+        <i class="fas fa-download"></i>
+        <span>Brief</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== BODY LAYOUT ===== -->
+  <div class="body-layout">
+
+    <!-- ===== LEFT SIDEBAR ===== -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-label="Overview">
+          <i class="fas fa-th-large"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#" class="nav-item" data-label="Roles">
+          <i class="fas fa-chess-knight"></i>
+          <span>Roles</span>
+        </a>
+        <a href="#" class="nav-item" data-label="Players">
+          <i class="fas fa-running"></i>
+          <span>Players</span>
+        </a>
+        <a href="#" class="nav-item" data-label="Watchlist">
+          <i class="fas fa-star"></i>
+          <span>Watchlist</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <a href="#" class="nav-item" data-label="Briefs">
+          <i class="fas fa-file-alt"></i>
+          <span>Briefs</span>
+        </a>
+        <div class="sidebar-spacer"></div>
+        <a href="#" class="nav-item" data-label="Settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+      <!-- DASHBOARD HEADER -->
+      <div class="dashboard-header">
+        <div class="dashboard-title-block">
+          <h1 class="dashboard-title">Ligue 2 Signal Board</h1>
+          <p class="dashboard-subtitle">Data-first shortlists for player discovery</p>
+        </div>
+        <div class="status-bar">
+          <div class="status-pill clubs">
+            <span class="status-indicator clubs-ind"></span>
+            <strong>18</strong><span>Clubs Tracked</span>
+          </div>
+          <div class="status-pill players">
+            <span class="status-indicator players-ind"></span>
+            <strong>314</strong><span>Active Players</span>
+          </div>
+          <div class="status-pill signals">
+            <span class="status-indicator signals-ind"></span>
+            <strong>12</strong><span>New Signals This Month</span>
+          </div>
+          <div class="status-pill u23">
+            <span class="status-indicator u23-ind"></span>
+            <strong>7</strong><span>U23 Signals This Cycle</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO ALERT CARDS -->
+      <div class="hero-alerts">
+        <div class="alert-card alert-u23">
+          <div class="alert-icon-wrap u23-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <div class="alert-body">
+            <div class="alert-count">7</div>
+            <div class="alert-label">New U23 signals this month</div>
+          </div>
+          <div class="alert-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="alert-card alert-aerial">
+          <div class="alert-icon-wrap aerial-icon">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </div>
+          <div class="alert-body">
+            <div class="alert-count">3</div>
+            <div class="alert-label">Aerial CBs crossed review threshold</div>
+          </div>
+          <div class="alert-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="alert-card alert-box">
+          <div class="alert-icon-wrap box-icon">
+            <i class="fas fa-crosshairs"></i>
+          </div>
+          <div class="alert-body">
+            <div class="alert-count">2</div>
+            <div class="alert-label">Box-threat 9s trending upward</div>
+          </div>
+          <div class="alert-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="alert-card alert-prog">
+          <div class="alert-icon-wrap prog-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="alert-body">
+            <div class="alert-count">↑</div>
+            <div class="alert-label">Progressive midfield activity rising</div>
+          </div>
+          <div class="alert-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+
+      <!-- ROLE PANELS GRID -->
+      <div class="role-panels">
+
+        <!-- Ball-Winning 6 -->
+        <div class="role-panel">
+          <div class="role-panel-header">
+            <div class="role-icon-wrap bw6-color">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="role-title-block">
+              <span class="role-title">Ball-Winning 6</span>
+              <span class="role-tag">Defensive Mid</span>
+            </div>
+            <span class="role-count">6</span>
+          </div>
+          <div class="role-players">
+            <div class="role-player">
+              <div class="player-avatar" data-initials="TD" style="--av-color: #3b82f6;"><img src="images/players/td.jpg" alt="T. Diallo"></div>
+              <div class="player-info">
+                <span class="player-name">T. Diallo</span>
+                <span class="player-club">Caen · 24</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-blue" title="Pressing Signal"><i class="fas fa-compress-arrows-alt"></i></span>
+                <span class="sig-tag sig-amber" title="Recovery"><i class="fas fa-shield-alt"></i></span>
+              </div>
+              <div class="player-score">8.4</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="YL" style="--av-color: #6366f1;"><img src="images/players/yl.jpg" alt="Y. Lefebvre"></div>
+              <div class="player-info">
+                <span class="player-name">Y. Lefebvre</span>
+                <span class="player-club">Rodez · 22</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-blue"><i class="fas fa-compress-arrows-alt"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-shield-alt"></i></span>
+              </div>
+              <div class="player-score">7.9</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="HS" style="--av-color: #8b5cf6;"><img src="images/players/hs.jpg" alt="H. Sagna"></div>
+              <div class="player-info">
+                <span class="player-name">H. Sagna</span>
+                <span class="player-club">Laval · 26</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-blue"><i class="fas fa-compress-arrows-alt"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-shield-alt"></i></span>
+              </div>
+              <div class="player-score">7.6</div>
+            </div>
+          </div>
+          <div class="role-reason">
+            <i class="fas fa-info-circle"></i>
+            High press participation rate — last 8 matches
+          </div>
+        </div>
+
+        <!-- Progressive 8/10 -->
+        <div class="role-panel">
+          <div class="role-panel-header">
+            <div class="role-icon-wrap prog-color">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="role-title-block">
+              <span class="role-title">Progressive 8/10</span>
+              <span class="role-tag">Central Mid</span>
+            </div>
+            <span class="role-count">8</span>
+          </div>
+          <div class="role-players">
+            <div class="role-player">
+              <div class="player-avatar" data-initials="EK" style="--av-color: #10b981;"><img src="images/players/ek.jpg" alt="E. Kroupi"></div>
+              <div class="player-info">
+                <span class="player-name">E. Kroupi</span>
+                <span class="player-club">Grenoble · 21</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-long-arrow-alt-right"></i></span>
+              </div>
+              <div class="player-score sig-green-text">9.1</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="NL" style="--av-color: #059669;"><img src="images/players/nl.jpg" alt="N. Lebreton"></div>
+              <div class="player-info">
+                <span class="player-name">N. Lebreton</span>
+                <span class="player-club">Pau · 23</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-long-arrow-alt-right"></i></span>
+              </div>
+              <div class="player-score sig-green-text">8.7</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="MT" style="--av-color: #34d399;"><img src="images/players/mt.jpg" alt="M. Tourraine"></div>
+              <div class="player-info">
+                <span class="player-name">M. Tourraine</span>
+                <span class="player-club">Valenciennes · 25</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-long-arrow-alt-right"></i></span>
+              </div>
+              <div class="player-score sig-green-text">8.2</div>
+            </div>
+          </div>
+          <div class="role-reason">
+            <i class="fas fa-info-circle"></i>
+            Progressive carries + pass completion above 88%
+          </div>
+        </div>
+
+        <!-- Aerial Center Backs -->
+        <div class="role-panel">
+          <div class="role-panel-header">
+            <div class="role-icon-wrap aerial-color">
+              <span class="flag-mini">🇫🇷</span>
+            </div>
+            <div class="role-title-block">
+              <span class="role-title">Aerial Center-Backs</span>
+              <span class="role-tag">Centre Back</span>
+            </div>
+            <span class="role-count role-count-alert">3 !</span>
+          </div>
+          <div class="role-players">
+            <div class="role-player">
+              <div class="player-avatar" data-initials="LD" style="--av-color: #f59e0b;"><img src="images/players/ld.jpg" alt="L. Diarra"></div>
+              <div class="player-info">
+                <span class="player-name">L. Diarra</span>
+                <span class="player-club">Metz · 27</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-blue"><i class="fas fa-expand-arrows-alt"></i></span>
+              </div>
+              <div class="player-score">8.6</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="CV" style="--av-color: #d97706;"><img src="images/players/cv.jpg" alt="C. Vidal"></div>
+              <div class="player-info">
+                <span class="player-name">C. Vidal</span>
+                <span class="player-club">Saint-Étienne · 29</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-blue"><i class="fas fa-expand-arrows-alt"></i></span>
+              </div>
+              <div class="player-score">8.1</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="MC" style="--av-color: #b45309;"><img src="images/players/mc.jpg" alt="M. Camara"></div>
+              <div class="player-info">
+                <span class="player-name">M. Camara</span>
+                <span class="player-club">Troyes · 24</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-blue"><i class="fas fa-expand-arrows-alt"></i></span>
+              </div>
+              <div class="player-score">7.8</div>
+            </div>
+          </div>
+          <div class="role-reason">
+            <i class="fas fa-info-circle"></i>
+            High aerial win rate — above 72% over last 8 matches
+          </div>
+        </div>
+
+        <!-- Attacking Fullbacks -->
+        <div class="role-panel">
+          <div class="role-panel-header">
+            <div class="role-icon-wrap fb-color">
+              <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="role-title-block">
+              <span class="role-title">Attacking Fullbacks</span>
+              <span class="role-tag">Full Back</span>
+            </div>
+            <span class="role-count">5</span>
+          </div>
+          <div class="role-players">
+            <div class="role-player">
+              <div class="player-avatar" data-initials="ST" style="--av-color: #06b6d4;"><img src="images/players/st.jpg" alt="S. Traoré"></div>
+              <div class="player-info">
+                <span class="player-name">S. Traoré</span>
+                <span class="player-club">Dunkerque · 23</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-amber"><i class="fas fa-arrow-right"></i></span>
+                <span class="sig-tag sig-blue"><i class="fas fa-arrow-down"></i></span>
+              </div>
+              <div class="player-score">8.3</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="BP" style="--av-color: #0891b2;"><img src="images/players/bp.jpg" alt="B. Perrin"></div>
+              <div class="player-info">
+                <span class="player-name">B. Perrin</span>
+                <span class="player-club">Auxerre · 22</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-blue"><i class="fas fa-arrow-up"></i></span>
+              </div>
+              <div class="player-score">7.9</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="LO" style="--av-color: #0e7490;"><img src="images/players/lo.jpg" alt="L. Ouattara"></div>
+              <div class="player-info">
+                <span class="player-name">L. Ouattara</span>
+                <span class="player-club">Annecy · 21</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-green"><i class="fas fa-arrow-up"></i></span>
+                <span class="sig-tag sig-blue"><i class="fas fa-arrow-up"></i></span>
+              </div>
+              <div class="player-score">7.5</div>
+            </div>
+          </div>
+          <div class="role-reason">
+            <i class="fas fa-info-circle"></i>
+            Crosses into box + final third entries above threshold
+          </div>
+        </div>
+
+        <!-- Box-Threat Forwards -->
+        <div class="role-panel">
+          <div class="role-panel-header">
+            <div class="role-icon-wrap fwd-color">
+              <i class="fas fa-futbol"></i>
+            </div>
+            <div class="role-title-block">
+              <span class="role-title">Box-Threat Forwards</span>
+              <span class="role-tag">Striker</span>
+            </div>
+            <span class="role-count role-count-alert">2 !</span>
+          </div>
+          <div class="role-players">
+            <div class="role-player">
+              <div class="player-avatar" data-initials="AK" style="--av-color: #ef4444;"><img src="images/players/ak.jpg" alt="A. Konaté"></div>
+              <div class="player-info">
+                <span class="player-name">A. Konaté</span>
+                <span class="player-club">Bastia · 22</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-amber"><i class="fas fa-crosshairs"></i></span>
+                <span class="sig-tag sig-red"><i class="fas fa-times-circle"></i></span>
+              </div>
+              <div class="player-score sig-amber-text">9.3</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="JN" style="--av-color: #dc2626;"><img src="images/players/jn.jpg" alt="J. Njo Lea"></div>
+              <div class="player-info">
+                <span class="player-name">J. Njo Lea</span>
+                <span class="player-club">Amiens · 24</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-amber"><i class="fas fa-crosshairs"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-long-arrow-alt-right"></i></span>
+              </div>
+              <div class="player-score sig-amber-text">8.8</div>
+            </div>
+            <div class="role-player">
+              <div class="player-avatar" data-initials="ML" style="--av-color: #b91c1c;"><img src="images/players/ml.jpg" alt="M. Larbi"></div>
+              <div class="player-info">
+                <span class="player-name">M. Larbi</span>
+                <span class="player-club">Quevilly · 26</span>
+              </div>
+              <div class="player-signals">
+                <span class="sig-tag sig-blue"><i class="fas fa-compress-arrows-alt"></i></span>
+                <span class="sig-tag sig-amber"><i class="fas fa-long-arrow-alt-right"></i></span>
+              </div>
+              <div class="player-score sig-amber-text">8.0</div>
+            </div>
+          </div>
+          <div class="role-reason">
+            <i class="fas fa-info-circle"></i>
+            xG above 0.45 per 90 mins — last 6 match trend
+          </div>
+        </div>
+
+      </div><!-- /role-panels -->
+
+      <!-- BOTTOM SECTION: 3 columns -->
+      <div class="bottom-section">
+
+        <!-- COL 1: Players Worth Reviewing -->
+        <div class="bottom-panel review-panel">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <i class="fas fa-list-ul panel-icon"></i>
+              <h3 class="panel-title"><span class="highlight-num">10</span> Players Worth Reviewing Now</h3>
+            </div>
+            <button class="panel-action-btn">View All <i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="review-list">
+            <div class="review-item review-top3" data-player="EK">
+              <span class="review-rank rank-1">1</span>
+              <div class="review-thumb" style="--av-color:#10b981"><img src="images/players/ek.jpg" alt="E. Kroupi"></div>
+              <div class="review-player-info">
+                <span class="review-name">Eli Kroupi</span>
+                <span class="review-meta">Grenoble · CM · 21</span>
+              </div>
+              <span class="review-role-tag green">Prog 8</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-5"></span><span class="mini-bar bar-5"></span><span class="mini-bar bar-4"></span>
+              </div>
+            </div>
+            <div class="review-item review-top3" data-player="LD">
+              <span class="review-rank rank-2">2</span>
+              <div class="review-thumb" style="--av-color:#f59e0b"><img src="images/players/ld.jpg" alt="L. Diarra"></div>
+              <div class="review-player-info">
+                <span class="review-name">Lamine Diarra</span>
+                <span class="review-meta">Metz · CB · 27</span>
+              </div>
+              <span class="review-role-tag amber">Aerial CB</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-5"></span><span class="mini-bar bar-4"></span><span class="mini-bar bar-5"></span>
+              </div>
+            </div>
+            <div class="review-item review-top3" data-player="NL">
+              <span class="review-rank rank-3">3</span>
+              <div class="review-thumb" style="--av-color:#059669"><img src="images/players/nl.jpg" alt="N. Lebreton"></div>
+              <div class="review-player-info">
+                <span class="review-name">Noé Lebreton</span>
+                <span class="review-meta">Pau · CM · 23</span>
+              </div>
+              <span class="review-role-tag green">Prog 8</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-5"></span><span class="mini-bar bar-4"></span><span class="mini-bar bar-3"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="AK">
+              <span class="review-rank">4</span>
+              <div class="review-thumb" style="--av-color:#ef4444"><img src="images/players/ak.jpg" alt="A. Konaté"></div>
+              <div class="review-player-info">
+                <span class="review-name">Abdou Konaté</span>
+                <span class="review-meta">Bastia · ST · 22</span>
+              </div>
+              <span class="review-role-tag red">Box FWD</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-5"></span><span class="mini-bar bar-5"></span><span class="mini-bar bar-2"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="YL">
+              <span class="review-rank">5</span>
+              <div class="review-thumb" style="--av-color:#6366f1"><img src="images/players/yl.jpg" alt="Y. Lefebvre"></div>
+              <div class="review-player-info">
+                <span class="review-name">Yanis Lefebvre</span>
+                <span class="review-meta">Rodez · DM · 22</span>
+              </div>
+              <span class="review-role-tag blue">BW 6</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-4"></span><span class="mini-bar bar-3"></span><span class="mini-bar bar-4"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="ST">
+              <span class="review-rank">6</span>
+              <div class="review-thumb" style="--av-color:#06b6d4"><img src="images/players/st.jpg" alt="S. Traoré"></div>
+              <div class="review-player-info">
+                <span class="review-name">S. Traoré</span>
+                <span class="review-meta">Dunkerque · FB · 23</span>
+              </div>
+              <span class="review-role-tag cyan">Att FB</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-4"></span><span class="mini-bar bar-3"></span><span class="mini-bar bar-3"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="HS">
+              <span class="review-rank">7</span>
+              <div class="review-thumb" style="--av-color:#8b5cf6"><img src="images/players/hs.jpg" alt="H. Sagna"></div>
+              <div class="review-player-info">
+                <span class="review-name">H. Sagna</span>
+                <span class="review-meta">Laval · DM · 26</span>
+              </div>
+              <span class="review-role-tag blue">BW 6</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-4"></span><span class="mini-bar bar-2"></span><span class="mini-bar bar-4"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="JN">
+              <span class="review-rank">8</span>
+              <div class="review-thumb" style="--av-color:#dc2626"><img src="images/players/jn.jpg" alt="J. Njo Lea"></div>
+              <div class="review-player-info">
+                <span class="review-name">J. Njo Lea</span>
+                <span class="review-meta">Amiens · ST · 24</span>
+              </div>
+              <span class="review-role-tag red">Box FWD</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-3"></span><span class="mini-bar bar-4"></span><span class="mini-bar bar-3"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="BP">
+              <span class="review-rank">9</span>
+              <div class="review-thumb" style="--av-color:#0891b2"><img src="images/players/bp.jpg" alt="B. Perrin"></div>
+              <div class="review-player-info">
+                <span class="review-name">B. Perrin</span>
+                <span class="review-meta">Auxerre · FB · 22</span>
+              </div>
+              <span class="review-role-tag cyan">Att FB</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-3"></span><span class="mini-bar bar-3"></span><span class="mini-bar bar-2"></span>
+              </div>
+            </div>
+            <div class="review-item" data-player="ML">
+              <span class="review-rank">10</span>
+              <div class="review-thumb" style="--av-color:#b91c1c"><img src="images/players/ml.jpg" alt="M. Larbi"></div>
+              <div class="review-player-info">
+                <span class="review-name">M. Larbi</span>
+                <span class="review-meta">Quevilly · ST · 26</span>
+              </div>
+              <span class="review-role-tag red">Box FWD</span>
+              <div class="review-signals">
+                <span class="mini-bar bar-3"></span><span class="mini-bar bar-2"></span><span class="mini-bar bar-3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COL 2: Signal Movers -->
+        <div class="bottom-panel movers-panel">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <i class="fas fa-exchange-alt panel-icon"></i>
+              <h3 class="panel-title">Biggest Signal Movers</h3>
+            </div>
+          </div>
+
+          <div class="movers-section">
+            <div class="movers-section-label rising">
+              <i class="fas fa-arrow-trend-up"></i>Rising This Cycle
+            </div>
+            <div class="mover-item rising-mover">
+              <div class="mover-avatar" data-initials="RT" style="--av-color: #10b981;"><img src="images/players/rt.jpg" alt="R. Taibi"></div>
+              <div class="mover-info">
+                <span class="mover-name">R. Taibi</span>
+                <span class="mover-club">Guingamp · 23</span>
+              </div>
+              <div class="mover-trend">
+                <span class="trend-chip trend-up">+2.4</span>
+                <i class="fas fa-arrow-up trend-arrow-up"></i>
+              </div>
+              <div class="mover-sparkline">
+                <svg viewBox="0 0 60 20" preserveAspectRatio="none">
+                  <polyline points="0,18 12,14 24,12 36,8 48,5 60,2" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="mover-item rising-mover">
+              <div class="mover-avatar" data-initials="MI" style="--av-color: #10b981;"><img src="images/players/mi.jpg" alt="M. Ifnaoui"></div>
+              <div class="mover-info">
+                <span class="mover-name">M. Ifnaoui</span>
+                <span class="mover-club">Caen · 21</span>
+              </div>
+              <div class="mover-trend">
+                <span class="trend-chip trend-up">+1.9</span>
+                <i class="fas fa-arrow-up trend-arrow-up"></i>
+              </div>
+              <div class="mover-sparkline">
+                <svg viewBox="0 0 60 20" preserveAspectRatio="none">
+                  <polyline points="0,16 12,14 24,12 36,10 48,7 60,4" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="mover-item rising-mover">
+              <div class="mover-avatar" data-initials="JM" style="--av-color: #10b981;"><img src="images/players/jm.jpg" alt="J. Moreira"></div>
+              <div class="mover-info">
+                <span class="mover-name">J. Moreira</span>
+                <span class="mover-club">Angers · 25</span>
+              </div>
+              <div class="mover-trend">
+                <span class="trend-chip trend-up">+1.6</span>
+                <i class="fas fa-arrow-up trend-arrow-up"></i>
+              </div>
+              <div class="mover-sparkline">
+                <svg viewBox="0 0 60 20" preserveAspectRatio="none">
+                  <polyline points="0,17 12,15 24,13 36,11 48,8 60,5" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="movers-section">
+            <div class="movers-section-label dropping">
+              <i class="fas fa-arrow-trend-down"></i>Dropping This Cycle
+            </div>
+            <div class="mover-item dropping-mover">
+              <div class="mover-avatar" data-initials="AD" style="--av-color: #ef4444;"><img src="images/players/ad.jpg" alt="A. Doukansy"></div>
+              <div class="mover-info">
+                <span class="mover-name">A. Doukansy</span>
+                <span class="mover-club">Niort · 28</span>
+              </div>
+              <div class="mover-trend">
+                <span class="trend-chip trend-down">−1.8</span>
+                <i class="fas fa-arrow-down trend-arrow-down"></i>
+              </div>
+              <div class="mover-sparkline">
+                <svg viewBox="0 0 60 20" preserveAspectRatio="none">
+                  <polyline points="0,2 12,5 24,8 36,11 48,14 60,18" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="mover-item dropping-mover">
+              <div class="mover-avatar" data-initials="VM" style="--av-color: #ef4444;"><img src="images/players/vm.jpg" alt="V. Maraval"></div>
+              <div class="mover-info">
+                <span class="mover-name">V. Maraval</span>
+                <span class="mover-club">Toulouse B · 22</span>
+              </div>
+              <div class="mover-trend">
+                <span class="trend-chip trend-down">−1.2</span>
+                <i class="fas fa-arrow-down trend-arrow-down"></i>
+              </div>
+              <div class="mover-sparkline">
+                <svg viewBox="0 0 60 20" preserveAspectRatio="none">
+                  <polyline points="0,3 12,6 24,9 36,12 48,15 60,17" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="action-btn btn-primary">
+              <i class="fas fa-download"></i>Download Latest Brief
+            </button>
+            <button class="action-btn btn-secondary">
+              <i class="fas fa-file-csv"></i>Export CSV
+            </button>
+            <button class="action-btn btn-ghost">
+              <i class="fas fa-star"></i>My Watchlist
+            </button>
+          </div>
+        </div>
+
+        <!-- COL 3: Shadow Tags -->
+        <div class="bottom-panel tags-panel">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <i class="fas fa-tags panel-icon"></i>
+              <h3 class="panel-title">Active Shadow Tags</h3>
+            </div>
+            <span class="panel-cycle-badge">This Cycle</span>
+          </div>
+          <div class="tags-list">
+            <div class="tag-item">
+              <div class="tag-icon-wrap tag-green">
+                <i class="fas fa-magnet"></i>
+              </div>
+              <div class="tag-info">
+                <span class="tag-name">Recovery Magnet</span>
+                <span class="tag-desc">High duel recovery index</span>
+              </div>
+              <div class="tag-count">
+                <span class="count-num">8</span>
+                <span class="count-label">Players</span>
+              </div>
+              <div class="tag-bar-bg"><div class="tag-bar-fill" style="width: 80%;"></div></div>
+            </div>
+            <div class="tag-item">
+              <div class="tag-icon-wrap tag-blue">
+                <i class="fas fa-link"></i>
+              </div>
+              <div class="tag-info">
+                <span class="tag-name">Vertical Link</span>
+                <span class="tag-desc">Vertical pass receiver profile</span>
+              </div>
+              <div class="tag-count">
+                <span class="count-num">6</span>
+                <span class="count-label">Players</span>
+              </div>
+              <div class="tag-bar-bg"><div class="tag-bar-fill" style="width: 60%;"></div></div>
+            </div>
+            <div class="tag-item">
+              <div class="tag-icon-wrap tag-cyan">
+                <i class="fas fa-lock"></i>
+              </div>
+              <div class="tag-info">
+                <span class="tag-name">Air Lock</span>
+                <span class="tag-desc">Dominant in aerial zones</span>
+              </div>
+              <div class="tag-count">
+                <span class="count-num">5</span>
+                <span class="count-label">Players</span>
+              </div>
+              <div class="tag-bar-bg"><div class="tag-bar-fill" style="width: 50%;"></div></div>
+            </div>
+            <div class="tag-item">
+              <div class="tag-icon-wrap tag-amber">
+                <i class="fas fa-crosshairs"></i>
+              </div>
+              <div class="tag-info">
+                <span class="tag-name">Box Hunter</span>
+                <span class="tag-desc">Box entries & finishing rate</span>
+              </div>
+              <div class="tag-count">
+                <span class="count-num">4</span>
+                <span class="count-label">Players</span>
+              </div>
+              <div class="tag-bar-bg"><div class="tag-bar-fill" style="width: 40%;"></div></div>
+            </div>
+            <div class="tag-item">
+              <div class="tag-icon-wrap tag-purple">
+                <i class="fas fa-running"></i>
+              </div>
+              <div class="tag-info">
+                <span class="tag-name">Carry Trigger</span>
+                <span class="tag-desc">Progressive carry initiator</span>
+              </div>
+              <div class="tag-count">
+                <span class="count-num">3</span>
+                <span class="count-label">Players</span>
+              </div>
+              <div class="tag-bar-bg"><div class="tag-bar-fill" style="width: 30%;"></div></div>
+            </div>
+            <div class="tag-item">
+              <div class="tag-icon-wrap tag-red">
+                <i class="fas fa-compress-arrows-alt"></i>
+              </div>
+              <div class="tag-info">
+                <span class="tag-name">Press Trigger</span>
+                <span class="tag-desc">High-intensity press initiations</span>
+              </div>
+              <div class="tag-count">
+                <span class="count-num">7</span>
+                <span class="count-label">Players</span>
+              </div>
+              <div class="tag-bar-bg"><div class="tag-bar-fill" style="width: 70%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Cycle Comparison -->
+          <div class="cycle-comparison">
+            <div class="cycle-comp-header">
+              <i class="fas fa-history"></i>
+              <span>vs. Previous Cycle</span>
+            </div>
+            <div class="cycle-comp-stats">
+              <div class="cyc-stat">
+                <span class="cyc-num up">+3</span>
+                <span class="cyc-label">Tags Added</span>
+              </div>
+              <div class="cyc-divider"></div>
+              <div class="cyc-stat">
+                <span class="cyc-num down">−1</span>
+                <span class="cyc-label">Tags Dropped</span>
+              </div>
+              <div class="cyc-divider"></div>
+              <div class="cyc-stat">
+                <span class="cyc-num neutral">33</span>
+                <span class="cyc-label">Total Tagged</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /bottom-section -->
+
+    </main><!-- /main-content -->
+  </div><!-- /body-layout -->
+</div><!-- /app-shell -->
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  /* Wire logout + username display */
+  document.addEventListener('DOMContentLoaded', () => {
+    const raw = localStorage.getItem('ss_session');
+    if (!raw) return;
+    try {
+      const session = JSON.parse(raw);
+      const userBtn = document.querySelector('.btn-icon[title="Account"]');
+      if (userBtn && session.username) {
+        userBtn.setAttribute('title', 'Signed in as ' + session.username);
+        userBtn.querySelector('i').style.color = 'var(--accent)';
+      }
+    } catch(e) {}
+    const logo = document.querySelector('.logo');
+    if (logo) logo.addEventListener('click', () => window.location.href = 'landing.html');
+  });
+</script>
+</body>
+</html>

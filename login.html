@@ -206,7 +206,7 @@ const VALID_CREDENTIALS = [
   if (raw) {
     try {
       const s = JSON.parse(raw);
-      if (Date.now() < s.expires) { window.location.href = 'index.html'; }
+      if (Date.now() < s.expires) { window.location.href = 'dashboard.html'; }
     } catch(e) {}
   }
 })();
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="success-sub">Loading Signal Board…</div>`;
     document.body.appendChild(overlay);
     requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
-    setTimeout(() => { window.location.href = 'index.html'; }, 1400);
+    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1400);
   }
 });
 </script>

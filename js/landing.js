@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctas.forEach(cta => {
           if (cta.textContent.includes('Demo') || cta.textContent.includes('Sign')) {
             cta.textContent = '→ Go to Dashboard';
-            cta.href = 'index.html';
+            cta.href = 'dashboard.html';
           }
         });
       }

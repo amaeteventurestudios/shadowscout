@@ -36,7 +36,7 @@ ShadowScout is a dark-theme, data-first football scouting UI prototype focused o
 - **Session management** — 8-hour localStorage session, redirects to dashboard if already logged in
 - **Responsive** — side panel hidden on mobile, form fills screen
 
-### 📊 Dashboard (`index.html`)
+### 📊 Dashboard (`dashboard.html`)
 - Fixed sidebar + top nav (16:9 desktop layout)
 - All-blue accent scheme (`#4F8EF7`)
 - 20 AI-generated fictional player headshots integrated throughout
@@ -53,7 +53,7 @@ ShadowScout is a dark-theme, data-first football scouting UI prototype focused o
 |---|---|
 | `landing.html` | Public marketing page (default entry) |
 | `login.html` | Authentication page |
-| `index.html` | Protected dashboard (requires login) |
+| `dashboard.html` | Protected dashboard (requires login) |
 
 **Demo login**: Username `shadow`, Password `scout`
 

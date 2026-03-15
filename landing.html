@@ -762,7 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (Date.now() < session.expires) {
         document.querySelectorAll('a[href="login.html"]').forEach(a => {
           a.textContent = '→ Dashboard';
-          a.href = 'index.html';
+          a.href = 'dashboard.html';
         });
       }
     } catch(e) {}

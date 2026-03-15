@@ -24,7 +24,7 @@ if (document.getElementById('loginForm')) {
 
   /* Redirect if already logged in */
   if (sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY)) {
-    window.location.href = 'index.html';
+    window.location.href = 'dashboard.html';
   }
 
   /* Toggle password visibility */
@@ -132,7 +132,7 @@ if (document.getElementById('loginForm')) {
     });
 
     setTimeout(() => {
-      window.location.href = 'index.html';
+      window.location.href = 'dashboard.html';
     }, 1400);
   }
 }
