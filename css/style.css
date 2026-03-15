@@ -1158,3 +1158,231 @@ body::before {
 .role-player:hover .player-score { color: var(--accent); }
 .review-item:hover .review-name  { color: var(--accent); }
 .mover-item:hover .mover-name    { color: var(--accent); }
+
+/* ── MOBILE NAV HAMBURGER ──────────────────────────────────── */
+.topnav-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  z-index: 101;
+  transition: background 0.15s;
+}
+
+.topnav-menu-btn:hover { background: rgba(255,255,255,0.08); }
+
+.topnav-menu-btn span {
+  display: block;
+  width: 16px; height: 1.5px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: all 0.22s;
+  transform-origin: center;
+}
+
+/* Animated X state */
+.topnav-menu-btn.is-active span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.topnav-menu-btn.is-active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.topnav-menu-btn.is-active span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Sidebar overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(8,15,28,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 149;
+}
+.sidebar-overlay.active { display: block; }
+
+/* ── RESPONSIVE BREAKPOINTS ────────────────────────────────── */
+
+/* ─── Tablet: ≤1100px ──────────────────────────────────────── */
+@media (max-width: 1100px) {
+  /* 5-col roles → 3+2 */
+  .role-panels { grid-template-columns: repeat(3, 1fr); }
+
+  /* Hide cycle label text to save space */
+  .cycle-updated { display: none; }
+
+  /* Shrink search bar */
+  .search-bar { width: 170px; }
+  .search-bar kbd { display: none; }
+}
+
+/* ─── Small tablet / large mobile: ≤900px ─────────────────── */
+@media (max-width: 900px) {
+  /* 3-col roles → 2-col */
+  .role-panels { grid-template-columns: repeat(2, 1fr); }
+
+  /* 3-col bottom → 2-col */
+  .bottom-section { grid-template-columns: 1fr 1fr; }
+
+  /* Remove the third panel (tags) from the 2-col layout — it wraps to full width */
+  .tags-panel { grid-column: 1 / -1; }
+
+  /* Cycle label hidden entirely */
+  .cycle-label { display: none; }
+
+  /* League badge shrink */
+  .topnav-divider:last-of-type { display: none; }
+}
+
+/* ─── Mobile: ≤768px ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Allow page to scroll naturally on mobile */
+  html, body {
+    height: auto;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  .app-shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .body-layout {
+    overflow: visible;
+  }
+
+  .main-content {
+    overflow: visible;
+    overflow-x: hidden;
+  }
+
+  /* ── TOPNAV mobile ── */
+  .topnav {
+    padding: 0 12px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .topnav-menu-btn { display: flex; }
+
+  /* Hide items that clutter mobile topnav */
+  .topnav-hide-sm { display: none !important; }
+  .topnav-divider { display: none; }
+  .league-badge .lock-icon { display: none; }
+
+  /* Compact logo */
+  .logo-text { font-size: 13px; }
+
+  /* ── SIDEBAR drawer ── */
+  .sidebar {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    bottom: 0;
+    z-index: 150;
+    width: 220px;
+    min-width: 220px;
+    transform: translateX(-100%);
+    transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  /* ── Hero alerts: 2 columns ── */
+  .hero-alerts { grid-template-columns: 1fr 1fr; }
+
+  /* ── Role panels: 1 column ── */
+  .role-panels { grid-template-columns: 1fr; }
+
+  /* ── Bottom section: 1 column, scroll naturally ── */
+  .bottom-section {
+    grid-template-columns: 1fr;
+    flex: none;
+    min-height: auto;
+  }
+
+  .tags-panel { grid-column: auto; }
+
+  /* Panels no longer need fixed overflow */
+  .bottom-panel {
+    overflow: visible;
+    min-height: auto;
+  }
+
+  /* Review list: remove height constraint */
+  .review-list {
+    overflow: visible;
+    max-height: none;
+  }
+
+  .tags-list {
+    overflow: visible;
+  }
+
+  /* Status bar: wrap tightly */
+  .dashboard-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .status-bar { flex-wrap: wrap; gap: 6px; }
+  .status-pill { padding: 3px 8px; font-size: 11px; }
+  .status-pill strong { font-size: 12px; }
+
+  /* Dashboard title */
+  .dashboard-title { font-size: 18px; }
+  .dashboard-subtitle { font-size: 11px; }
+
+  /* Shrink alert cards */
+  .alert-count { font-size: 16px; }
+  .alert-label { font-size: 10.5px; }
+
+  /* Main content padding */
+  .main-content { padding: 14px 12px 24px; gap: 12px; }
+
+  /* Brief button: icon only on very small */
+  .brief-label { display: none; }
+  .btn-download-brief { padding: 6px 10px; }
+}
+
+/* ─── Very small mobile: ≤480px ───────────────────────────── */
+@media (max-width: 480px) {
+  /* Hero alerts: 1 column */
+  .hero-alerts { grid-template-columns: 1fr; }
+
+  /* Alert card: more compact */
+  .alert-card { padding: 10px 12px; }
+
+  /* Role panel */
+  .role-panel { padding: 10px; }
+
+  /* Main content padding */
+  .main-content { padding: 12px 10px 24px; gap: 10px; }
+
+  /* Status pills: wrap */
+  .status-bar { gap: 4px; }
+  .status-pill { padding: 3px 7px; font-size: 10.5px; }
+
+  /* Bottom panels */
+  .bottom-panel { padding: 12px; }
+
+  /* Mover sparkline: hide on very small screens */
+  .mover-sparkline { display: none; }
+
+  /* Review role tags: hide on very small */
+  .review-role-tag { display: none; }
+
+  /* Dashboard title */
+  .dashboard-title { font-size: 16px; }
+}
